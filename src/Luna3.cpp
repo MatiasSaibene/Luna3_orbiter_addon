@@ -77,9 +77,87 @@ void Luna3::RevertLensCover (void)
 // --------------------------------------------------------------
 void Luna3::clbkSetClassCaps (FILEHANDLE cfg)
 {
+	THRUSTER_HANDLE th_rcs[24], th_group[40];
+
+	//Physical vessel parameters
 	SetSize (Luna3_SIZE);
 	SetEmptyMass (Luna3_EMPTY_MASS);
 	AddMesh("Luna3");
+
+	//Propellant resources
+	PROPELLANT_HANDLE hpr = CreatePropellantResource(Luna3_FUELMASS);
+
+
+	// RCS engines
+	th_rcs[ 0] = CreateThruster (_V( 1,0, 3), _V(0, 1,0), Luna3_MAXRCSTH, hpr, Luna3_ISP);
+	th_rcs[ 1] = CreateThruster (_V( 1,0, 3), _V(0,-1,0), Luna3_MAXRCSTH, hpr, Luna3_ISP);
+	th_rcs[ 2] = CreateThruster (_V(-1,0, 3), _V(0, 1,0), Luna3_MAXRCSTH, hpr, Luna3_ISP);
+	th_rcs[ 3] = CreateThruster (_V(-1,0, 3), _V(0,-1,0), Luna3_MAXRCSTH, hpr, Luna3_ISP);
+	th_rcs[ 4] = CreateThruster (_V( 1,0,-3), _V(0, 1,0), Luna3_MAXRCSTH, hpr, Luna3_ISP);
+	th_rcs[ 5] = CreateThruster (_V( 1,0,-3), _V(0,-1,0), Luna3_MAXRCSTH, hpr, Luna3_ISP);
+	th_rcs[ 6] = CreateThruster (_V(-1,0,-3), _V(0, 1,0), Luna3_MAXRCSTH, hpr, Luna3_ISP);
+	th_rcs[ 7] = CreateThruster (_V(-1,0,-3), _V(0,-1,0), Luna3_MAXRCSTH, hpr, Luna3_ISP);
+	th_rcs[ 8] = CreateThruster (_V( 1,0, 3), _V(-1,0,0), Luna3_MAXRCSTH, hpr, Luna3_ISP);
+	th_rcs[ 9] = CreateThruster (_V(-1,0, 3), _V( 1,0,0), Luna3_MAXRCSTH, hpr, Luna3_ISP);
+	th_rcs[10] = CreateThruster (_V( 1,0,-3), _V(-1,0,0), Luna3_MAXRCSTH, hpr, Luna3_ISP);
+	th_rcs[11] = CreateThruster (_V(-1,0,-3), _V( 1,0,0), Luna3_MAXRCSTH, hpr, Luna3_ISP);
+	th_rcs[12] = CreateThruster (_V( 0,0,-3), _V(0,0, 1), Luna3_MAXRCSTH, hpr, Luna3_ISP);
+	th_rcs[13] = CreateThruster (_V( 0,0, 3), _V(0,0,-1), Luna3_MAXRCSTH, hpr, Luna3_ISP);
+
+	th_group[0] = th_rcs[0];
+	th_group[1] = th_rcs[2];
+	th_group[2] = th_rcs[5];
+	th_group[3] = th_rcs[7];
+	CreateThrusterGroup (th_group, 4, THGROUP_ATT_PITCHUP);
+
+	th_group[0] = th_rcs[1];
+	th_group[1] = th_rcs[3];
+	th_group[2] = th_rcs[4];
+	th_group[3] = th_rcs[6];
+	CreateThrusterGroup (th_group, 4, THGROUP_ATT_PITCHDOWN);
+
+	th_group[0] = th_rcs[0];
+	th_group[1] = th_rcs[4];
+	th_group[2] = th_rcs[3];
+	th_group[3] = th_rcs[7];
+	CreateThrusterGroup (th_group, 4, THGROUP_ATT_BANKLEFT);
+
+	th_group[0] = th_rcs[1];
+	th_group[1] = th_rcs[5];
+	th_group[2] = th_rcs[2];
+	th_group[3] = th_rcs[6];
+	CreateThrusterGroup (th_group, 4, THGROUP_ATT_BANKRIGHT);
+
+	th_group[0] = th_rcs[0];
+	th_group[1] = th_rcs[4];
+	th_group[2] = th_rcs[2];
+	th_group[3] = th_rcs[6];
+	CreateThrusterGroup (th_group, 4, THGROUP_ATT_UP);
+
+	th_group[0] = th_rcs[1];
+	th_group[1] = th_rcs[5];
+	th_group[2] = th_rcs[3];
+	th_group[3] = th_rcs[7];
+	CreateThrusterGroup (th_group, 4, THGROUP_ATT_DOWN);
+
+	th_group[0] = th_rcs[8];
+	th_group[1] = th_rcs[11];
+	CreateThrusterGroup (th_group, 2, THGROUP_ATT_YAWLEFT);
+
+	th_group[0] = th_rcs[9];
+	th_group[1] = th_rcs[10];
+	CreateThrusterGroup (th_group, 2, THGROUP_ATT_YAWRIGHT);
+
+	th_group[0] = th_rcs[8];
+	th_group[1] = th_rcs[10];
+	CreateThrusterGroup (th_group, 2, THGROUP_ATT_LEFT);
+
+	th_group[0] = th_rcs[9];
+	th_group[1] = th_rcs[11];
+	CreateThrusterGroup (th_group, 2, THGROUP_ATT_RIGHT);
+
+	CreateThrusterGroup (th_rcs+12, 1, THGROUP_ATT_FORWARD);
+	CreateThrusterGroup (th_rcs+13, 1, THGROUP_ATT_BACK);
 }
 
 // --------------------------------------------------------------
@@ -128,6 +206,7 @@ void Luna3::clbkPostStep (double simt, double simdt, double mjd)
 		}
 		SetAnimation (anim_lens_cover, lens_cover_proc);
 	}
+
 }
 
 // --------------------------------------------------------------

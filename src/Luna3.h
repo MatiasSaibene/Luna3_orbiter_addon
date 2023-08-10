@@ -17,11 +17,14 @@
 #include "Orbitersdk.h"
 
 // ==============================================================
-// Some parameters and capabilities
+// Some parameters
 // ==============================================================
 
 const double Luna3_SIZE = 1.3;
-const double Luna3_EMPTY_MASS = 278;
+const double Luna3_EMPTY_MASS = 278.5;
+const double Luna3_FUELMASS = 100.0;
+const double Luna3_ISP = 1000;
+const double Luna3_MAXRCSTH = 100;
 const double LENS_COVER_OPERATING_SPEED = 0.025;
 
 // ==============================================================
