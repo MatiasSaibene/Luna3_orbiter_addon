@@ -15,16 +15,16 @@ https://www.mediafire.com/file/lyasc2brgq8lxe0/Luna3.blend/file
 
 ## TODO:
 
-Add RCS features (engines, contrails, etc.).
+Add RCS features (engines, contrails, etc.). - Partial
 
 
-Animate the antennas (as soon as I find out more about how they worked in real life).
+Animate the antennas (as soon as I find out more about how they worked in real life). - To do
 
 
-Improve textures and mesh.
+Improve textures and mesh. - To do
 
 
-Make a version for Orbiter Windows.
+Make a version for Orbiter Windows. - Done
 
 
 Whichever happens first...
